@@ -1,10 +1,10 @@
+version: '3.8'
+
 services:
   backend:
-    image: hmthu30/ccs-backend:latest
+    image: hmthu30/rust-backend:latest
     container_name: rust-backend
     restart: unless-stopped
-    # Port 8080 is open to the world here. 
-    # If you only want Nginx to talk to it, you can remove "8080:8080"
     ports:
       - "8080:8080"
     volumes:
@@ -19,13 +19,13 @@ services:
       - ccs-network
 
   frontend:
-    image: hmthu30/ccs-frontend:latest
+    # Changed from ccs-frontend to frontend to match your push command
+    image: hmthu30/frontend:latest 
     container_name: frontend
     restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      # This looks for nginx.conf in your server's current folder
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - backend
